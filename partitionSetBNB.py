@@ -65,15 +65,13 @@ def findPartition(
 def execute_partition(filename, n):
     with open(filename, "r") as f:
         inputs = [int(line.strip()) for line in f]
-    tracemalloc.start()
-    start_time = time.time()
-    # inputs = [9, 2, 4, 3, 4, 10, 14, 10, 7, 1]  # Sample array
     total_value = sum(inputs)
     unassigned_value = total_value
     test_assignment = [False] * len(inputs)
     best_assignment = {"value": [False] * len(inputs)}
-    best_assignment = list(best_assignment["value"])
     best_err = {"value": float("inf")}
+    start_time = time.time()
+    tracemalloc.start()
     findPartition(
         inputs,
         0,
@@ -84,12 +82,12 @@ def execute_partition(filename, n):
         best_assignment,
         best_err,
     )
+    current, peak = tracemalloc.get_traced_memory()
 
     with open(f"{n}ElementDatasetOutputBNB.txt", "w") as f:
         f.write(
             f"Running time: %s in milliseconds \n" % ((time.time() - start_time) * 1000)
         )
-        current, peak = tracemalloc.get_traced_memory()
         f.write(f"Memory usage: Current={current}, Peak={peak}\n")
         f.write(
             f"Best Assignment: {best_assignment['value']}\n",
@@ -98,5 +96,5 @@ def execute_partition(filename, n):
 
 
 execute_partition("tenElementDataset.txt", 10)
-execute_partition("fortyElementDataset.txt", 40)
-execute_partition("eightyElementDataset.txt", 80)
+# execute_partition("fortyElementDataset.txt", 40)
+# execute_partition("eightyElementDataset.txt", 80)
