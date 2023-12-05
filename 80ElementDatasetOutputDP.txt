@@ -1,0 +1,4 @@
+Output for dataset with 80 elements
+Running time: 26.261568069458008 in milliseconds
+Memory usage: Current=15617, Peak=348113
+Can be divided into two subsets of equal sum

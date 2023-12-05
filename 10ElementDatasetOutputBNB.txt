@@ -1,0 +1,4 @@
+Running time: 4.0073394775390625 in milliseconds 
+Memory usage: Current=19799, Peak=20037
+Best Assignment: [True, True, True, True, False, False, False, False, True, False]
+Best Error: 0
