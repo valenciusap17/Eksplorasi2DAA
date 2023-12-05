@@ -12,24 +12,18 @@ def findPartition(
     best_assignment,
     best_err,
 ):
-    # Convert the best assignment list to be mutable inside the function
-    best_assignment["value"] = list(best_assignment["value"])
-
-    # If start_index is beyond the end of the array, then all entries have been assigned.
     if start_index >= len(values):
-        # We're done. See if this assignment is better than what we have so far.
+        # base case
         test_err = abs(2 * test_value - total_value)
-        if test_err < best_err["value"]:
-            # This is an improvement. Save it.
-            best_err["value"] = test_err
-            best_assignment["value"] = test_assignment.copy()
-            print(best_err["value"])
+        if test_err < best_err[0]:
+            best_err[0] = test_err
+            best_assignment[:] = test_assignment[:]
+            print(best_err[0])
     else:
-        # See if there's any way we can assign the remaining items to improve the solution.
+        # Check if there is a chance to improvement
         test_err = abs(2 * test_value - total_value)
-        if test_err - unassigned_value < best_err["value"]:
-            # There's a chance we can make an improvement.
-            # We will now assign the next item.
+        if test_err - unassigned_value < best_err[0]:
+            # There is a possiblity
             unassigned_value -= values[start_index]
 
             # Try adding values[start_index] to set 1.
@@ -59,17 +53,14 @@ def findPartition(
             )
 
 
-# Example usage
-
-
 def execute_partition(filename, n):
     with open(filename, "r") as f:
         inputs = [int(line.strip()) for line in f]
     total_value = sum(inputs)
     unassigned_value = total_value
     test_assignment = [False] * len(inputs)
-    best_assignment = {"value": [False] * len(inputs)}
-    best_err = {"value": float("inf")}
+    best_assignment = [False] * len(inputs)
+    best_err = [float("inf")]
     start_time = time.time()
     tracemalloc.start()
     findPartition(
@@ -90,9 +81,9 @@ def execute_partition(filename, n):
         )
         f.write(f"Memory usage: Current={current}, Peak={peak}\n")
         f.write(
-            f"Best Assignment: {best_assignment['value']}\n",
+            f"Best Assignment: {best_assignment}\n",
         )
-        f.write(f"Best Error: {best_err['value']}\n")
+        f.write(f"Best Error: {best_err[0]}\n")
 
 
 execute_partition("tenElementDataset.txt", 10)

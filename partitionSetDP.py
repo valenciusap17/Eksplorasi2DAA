@@ -50,16 +50,16 @@ else:
 def execute_partition(filename, n):
     with open(filename, "r") as f:
         inputs = [int(line.strip()) for line in f]
-    tracemalloc.start()
     start_time = time.time()
+    tracemalloc.start()
     result = findPartition(inputs, n)
+    current, peak = tracemalloc.get_traced_memory()
     # write to txt
     with open(f"{n}ElementDatasetOutputDP.txt", "w") as f:
         f.write(f"Output for dataset with {n} elements\n")
         f.write(
             "Running time: %s in milliseconds\n" % ((time.time() - start_time) * 1000)
         )
-        current, peak = tracemalloc.get_traced_memory()
         f.write(f"Memory usage: Current={current}, Peak={peak}\n")
         if result:
             f.write("Can be divided into two subsets of equal sum\n")
