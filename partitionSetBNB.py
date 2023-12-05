@@ -85,16 +85,16 @@ def execute_partition(filename, n):
         best_err,
     )
 
-    # with open(f"{n}ElementDatasetOutputBNB.txt", "w") as f:
-    #     f.write(
-    #         f"Running time: %s in milliseconds \n" % ((time.time() - start_time) * 1000)
-    #     )
-    #     current, peak = tracemalloc.get_traced_memory()
-    #     f.write(f"Memory usage: Current={current}, Peak={peak}\n")
-    #     f.write(
-    #         f"Best Assignment: {best_assignment['value']}\n",
-    #     )
-    #     f.write(f"Best Error: {best_err['value']}\n")
+    with open(f"{n}ElementDatasetOutputBNB.txt", "w") as f:
+        f.write(
+            f"Running time: %s in milliseconds \n" % ((time.time() - start_time) * 1000)
+        )
+        current, peak = tracemalloc.get_traced_memory()
+        f.write(f"Memory usage: Current={current}, Peak={peak}\n")
+        f.write(
+            f"Best Assignment: {best_assignment['value']}\n",
+        )
+        f.write(f"Best Error: {best_err['value']}\n")
 
 
 execute_partition("tenElementDataset.txt", 10)
